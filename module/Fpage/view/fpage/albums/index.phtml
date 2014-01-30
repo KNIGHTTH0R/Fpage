@@ -1,0 +1,15 @@
+<h1>Albums
+</h1>
+<div>
+<ul>
+
+<?php 
+//description,cover_photo,link,name,photos.fields(album,height,picture,width)
+foreach ($albums as $album){ 
+   echo "<li style='display:inline'>".
+   "<img src='http://graph.facebook.com/{$album->cover_photo}/picture?type=album'/>".
+   "$album->name</li>";
+}
+?>
+  </ul>
+</div>

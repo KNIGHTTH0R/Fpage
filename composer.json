@@ -1,0 +1,12 @@
+{
+	"name" : "hidran/Fpage",
+	"authors" : [{
+			"name" : "Hidran Arias",
+			"email" : "hidran@gmail.com"
+		}
+	],
+	"require" : {
+		"guzzle/guzzle" : "~3.7",
+		"zendframework/zendframework" : "~2.3-dev"
+	}
+}
