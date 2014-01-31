@@ -18,9 +18,12 @@ class AlbumsController extends AbstractActionController
 {
     public function indexAction()
     {
+    	$config = $this->getServiceLocator()->get('Config');
+    	$furl = $config['fpageConf']['graphurl'].'/'.$config['fpageConf']['pageid'];
     	
+    	//print_r($config);
     // Create a client and provide a base URL
-    $client = new Client('https://graph.facebook.com/270939905654/albums');
+    $client = new Client($furl.'/albums');
     $client->setDefaultOption('query', 
     		array('fields' => 
     				

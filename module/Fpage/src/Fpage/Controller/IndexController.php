@@ -18,9 +18,10 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
-    	
+    	$config = $this->getServiceLocator()->get('Config');
+    	$furl = $config['fpageConf']['graphurl'].'/'.$config['fpageConf']['pageid'];
     // Create a client and provide a base URL
-    $client = new Client('https://graph.facebook.com/270939905654');
+    $client = new Client($furl);
     // Create a request with basic Auth
     $request = $client->get();
     // Send the request and get the response
