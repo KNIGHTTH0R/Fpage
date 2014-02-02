@@ -1,0 +1,30 @@
+
+
+	<div class="row12"><?php echo $albumName;?></div>
+	
+
+
+
+
+  
+<?php
+//print_r($pictures);
+ foreach ($pictures as $k => $photo){ ?>
+
+       <div class="row">  
+            <div class="col-md-12 text-center">
+              <a href="/Fpage/Albums/pictureDetails/<?=$photo->id?>">
+              <img class="img-thumbnail" width="<?=$photo->width?>" height="<?=$photo->height?>"  src='<?= str_replace('_s', '_n', $photo->picture)?>'/>
+              </a>
+              <p class="text-center"><?= $this->escapehtml($photo->name)?></p>
+              
+              
+            </div>
+ </div>
+  <?php 
+
+}
+
+  ?>
+
+  
