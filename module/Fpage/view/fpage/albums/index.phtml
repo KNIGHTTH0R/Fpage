@@ -1,15 +1,53 @@
-<h1>Albums
-</h1>
-<div>
-<ul>
+<!--  
+<div class="container">
+	<div class="row12">Albums</div>
+	<div class="container-fluid"> 
+	-->
 
 <?php 
+//var_dump(get_class($this));die;
 //description,cover_photo,link,name,photos.fields(album,height,picture,width)
-foreach ($albums as $album){ 
-   echo "<li style='display:inline'>".
-   "<img src='http://graph.facebook.com/{$album->cover_photo}/picture?type=album'/>".
-   "$album->name</li>";
-}
+//print_r($this->vars('albums'));
+//foreach ($this->vars('albums') as $album){ 
+
+/*
+<div class='col-md-3'>
+			<div class='thumbnail'>
+				<img class='img-thumbnail'
+					src='<?=$facebookurl.'/'.$album->cover_photo?>/picture?type=album '/>
+				<div class="caption">
+   <?=$album->name?>
+   </div>
+			</div>
+
+		</div>
+		*/
+
+//  }
 ?>
-  </ul>
+<!-- 
+  </div>
 </div>
+ -->
+
+  <div class="row">
+<?php foreach ($this->vars('albums') as $k => $album){ ?>
+
+         
+            <div class="col-xs-3">
+              <a href="/Fpage/Albums/albumPictures/<?=$album->id?>"><img src='<?=$facebookurl.'/'.$album->cover_photo?>/picture?type=album '/></a>
+              <h5 class="text-center"><?=$album->name?></h5>
+              
+              
+            </div>
+ 
+  <?php 
+  //if ($k>0 && $k%10==0){
+   //echo "</div><div class='row'>";
+   //}
+}
+
+  ?>
+   </div>
+  
+ 
