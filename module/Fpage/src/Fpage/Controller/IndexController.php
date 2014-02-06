@@ -7,27 +7,35 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 namespace Fpage\Controller;
+
 use Guzzle\Http\Client;
-
-
-
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+//use Zend\Http\Request;
+//use Zend\Http\Client;
 
 class IndexController extends AbstractActionController
 {
+	private function getAccessToken(){
+		$config = $this->getServiceLocator()->get('Config');
+		return $config['fpageConf']['appid'].'|'.$config['fpageConf']['appsecret'];
+	}
     public function indexAction()
     {
     	$config = $this->getServiceLocator()->get('Config');
-    	$furl = $config['fpageConf']['graphurl'].'/'.$config['fpageConf']['pageid'];
+    	$furl = $config['fpageConf']['graphurl'].$config['fpageConf']['pageid'];
+    	$clientConf =  $config['fsocket'];
+    	echo $furl.'?access_token='.$this->getAccessToken();
+    	//var_dump($clientConf);die;
     // Create a client and provide a base URL
-    $client = new Client($furl);
-    // Create a request with basic Auth
+   
+     $client = new Client($furl);
+     $client->setDefaultOption('query', array('access_token' => $this->getAccessToken()));
     $request = $client->get();
-    // Send the request and get the response
-    $response = $request->send();
-    $user = json_decode($response->getBody(true));
-    	
+     $response = $request->send();
+     
+     $user = json_decode($response->getBody());
+    // print_r($user);die;
         return new ViewModel(array('user'=>$user));
     }
 }

@@ -74,6 +74,65 @@ return array(
             				),
             		),
             ),
+            
+            'posts' => array(
+            		'type'    => 'Literal',
+            		'options' => array(
+            				'route'    => '/Fpage/Posts',
+            				'defaults' => array(
+            						'__NAMESPACE__' => 'Fpage\Controller',
+            						'controller'    => 'Posts',
+            						'action'        => 'index',
+            				),
+            		),
+            		'may_terminate' => true,
+            		'child_routes' => array(
+            				'default' => array(
+            						'type'    => 'Segment',
+            						'options' => array(
+            								'route'    => '/[:action]/[:id]',
+            								'constraints' => array(
+            										'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+            										'id'     => '[0-9]*',
+            								),
+            								'defaults' => array(
+            										'__NAMESPACE__' => 'Fpage\Controller',
+            										'controller'    => 'Posts',
+            										'action'        => 'index',
+            								),
+            						),
+            				),
+            		),
+            ),
+            'videos' => array(
+            		'type'    => 'Literal',
+            		'options' => array(
+            				'route'    => '/Fpage/Videos',
+            				'defaults' => array(
+            						'__NAMESPACE__' => 'Fpage\Controller',
+            						'controller'    => 'Videos',
+            						'action'        => 'index',
+            				),
+            		),
+            		'may_terminate' => true,
+            		'child_routes' => array(
+            				'default' => array(
+            						'type'    => 'Segment',
+            						'options' => array(
+            								'route'    => '/[:action]/[:id]',
+            								'constraints' => array(
+            										'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+            										'id'     => '[0-9]*',
+            								),
+            								'defaults' => array(
+            										'__NAMESPACE__' => 'Fpage\Controller',
+            										'controller'    => 'Videos',
+            										'action'        => 'index',
+            								),
+            						),
+            				),
+            		),
+            ),
         ),
     ),
     'service_manager' => array(
@@ -98,7 +157,9 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Fpage\Controller\Index' => 'Fpage\Controller\IndexController',
-            'Fpage\Controller\Albums' => 'Fpage\Controller\AlbumsController'
+            'Fpage\Controller\Albums' => 'Fpage\Controller\AlbumsController',
+            'Fpage\Controller\Posts' => 'Fpage\Controller\PostsController',
+            'Fpage\Controller\Videos' => 'Fpage\Controller\VideosController'
         ),
     ),
     'view_manager' => array(
@@ -109,7 +170,7 @@ return array(
         'exception_template'       => 'error/index',
         'template_map' => array(
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
-            'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
+            'fpage/index/index' => __DIR__ . '/../view/fpage/index/index.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
         ),

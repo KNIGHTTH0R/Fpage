@@ -6,7 +6,6 @@
  * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
-
 return array(
     'router' => array(
         'routes' => array(
@@ -15,7 +14,7 @@ return array(
                 'options' => array(
                     'route'    => '/',
                     'defaults' => array(
-                        'controller' => 'Application\Controller\Index',
+                        'controller' => 'Fpage\Controller\Index',
                         'action'     => 'index',
                     ),
                 ),

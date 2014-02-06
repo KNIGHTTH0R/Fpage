@@ -14,8 +14,11 @@ use Zend\Mvc\MvcEvent;
 
 class Module
 {
-    public function onBootstrap(MvcEvent $e)
+	
+    public function onRender(MvcEvent $e)
     {
+    	$sm = $e->getController();
+    	var_dump($sm);die('hh');
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);

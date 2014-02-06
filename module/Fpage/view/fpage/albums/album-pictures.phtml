@@ -1,30 +1,46 @@
 
 
 	<div class="row12"><?php echo $albumName;?></div>
-	
 
-
-
-
-  
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Carousel indicators 
+    <ol class="carousel-indicators">
+    <?php
+    /*$totpci =count($pictures);
+     for($i=0; $i<$totpci; $i++) :?>
+        <li data-target="#myCarousel" data-slide-to="<?=$i?>" class="<?=$i==0?'active':''?>"></li>
+      <?php endfor;
+      */
+      ?>
+    </ol>  
+-->
+   <div class="carousel-inner">
 <?php
 //print_r($pictures);
  foreach ($pictures as $k => $photo){ ?>
 
-       <div class="row">  
-            <div class="col-md-12 text-center">
+         <div class="<?= $k==0?'active ':''?>item">
               <a href="/Fpage/Albums/pictureDetails/<?=$photo->id?>">
               <img class="img-thumbnail" width="<?=$photo->width?>" height="<?=$photo->height?>"  src='<?= str_replace('_s', '_n', $photo->picture)?>'/>
               </a>
-              <p class="text-center"><?= $this->escapehtml($photo->name)?></p>
-              
-              
-            </div>
- </div>
+              <div class="clearfix"></div>
+              <div class="row8 text-center">
+              <br>
+              <p class="text-left" style="margin:5px;padding:5px;line-height:1.5em;text-indent:2em"><?= $this->escapehtml($photo->name)?></p>
+              </div>
+         </div>
   <?php 
 
 }
 
   ?>
-
+  </div>
+ <!-- Carousel nav -->
+    <a class="carousel-control left" href="#myCarousel" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <a class="carousel-control right" href="#myCarousel" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
+</div>
   

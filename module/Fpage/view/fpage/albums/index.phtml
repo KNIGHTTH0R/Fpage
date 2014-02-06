@@ -31,20 +31,22 @@
  -->
 
   <div class="row">
-<?php foreach ($this->vars('albums') as $k => $album){ ?>
+<?php
+ $tot = count($this->vars('albums'));
+ foreach ($this->vars('albums') as $k => $album){ ?>
 
          
-            <div class="col-xs-3">
-              <a href="/Fpage/Albums/albumPictures/<?=$album->id?>"><img src='<?=$facebookurl.'/'.$album->cover_photo?>/picture?type=album '/></a>
+            <div class="text-center col-xs-5 col-sm-5 col-md-3" style="border: 0px solid red">
+              <a href="/Fpage/Albums/albumPictures/<?=$album->id?>"><img  class="text-center" src='<?=$facebookurl.'/'.$album->cover_photo?>/picture?type=album '/></a>
               <h5 class="text-center"><?=$album->name?></h5>
               
               
             </div>
  
   <?php 
-  //if ($k>0 && $k%10==0){
-   //echo "</div><div class='row'>";
-   //}
+  if ($k==$tot-1){
+   echo '<div class="clearfix visible-xs"></div>';
+   }
 }
 
   ?>
