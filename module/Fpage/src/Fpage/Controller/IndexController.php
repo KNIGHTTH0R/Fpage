@@ -25,7 +25,7 @@ class IndexController extends AbstractActionController
     	$config = $this->getServiceLocator()->get('Config');
     	$furl = $config['fpageConf']['graphurl'].$config['fpageConf']['pageid'];
     	$clientConf =  $config['fsocket'];
-    	echo $furl.'?access_token='.$this->getAccessToken();
+    //	echo $furl.'?access_token='.$this->getAccessToken();
     	//var_dump($clientConf);die;
     // Create a client and provide a base URL
    
