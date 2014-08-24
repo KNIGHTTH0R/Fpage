@@ -17,7 +17,8 @@ use Zend\Http\Request;
 
 class AlbumsController extends AbstractActionController
 {
-
+    //TODO
+    // put a cache factory
     private function getCache()
     {
         $cache = \Zend\Cache\StorageFactory::factory(
