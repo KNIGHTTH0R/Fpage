@@ -14,6 +14,8 @@ use Zend\View\Model\ViewModel;
 
 use Zend\Http\Client;
 use Zend\Http\Request;
+use Facebook\FacebookSession;
+use Facebook\FacebookRequest;
 
 class VideosController  extends AbstractActionController{
     //TODO
@@ -58,19 +60,15 @@ class VideosController  extends AbstractActionController{
         //	var_dump($result);
         if (!$success || !$result) {
 
-            $request = new Request();
-            $request->setUri($furl . '/videos');
-            $request->getQuery()->set('fields', $fields);
-            //$request->getQuery()->set('access_token',$this->getAccessToken());
-            //print_r($request->getQuery()->toString());die;
-            //echo $furl.'/albums';
-            $client = new  Client(null, $clientConf);
-
-
-            $response = $client->dispatch($request);
+            $session = new FacebookSession($_SESSION['fb_token']);
+            $req = new FacebookRequest($session, 'GET', '/' .$config['fpageConf']['pageid'].'/videos' , array('fields' => $fields));
+            $request = $req->execute();
             //    print_r($response->geBody());
-            $videos = json_decode($response->getBody());
-            $cache->setItem($key, serialize($videos));
+            if ($request) {
+                $videos = $request->getResponse();
+
+                $cache->setItem($key, serialize($videos));
+            }
             //  $this->albums = $albums->data;
         } else {
             $videos = unserialize($result);

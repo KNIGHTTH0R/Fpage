@@ -11,9 +11,10 @@ namespace Fpage\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-
-use Zend\Http\Client;
-use Zend\Http\Request;
+use Zend\Session;
+use Facebook\FacebookSession;
+use Facebook\FacebookRequest;
+use Facebook\GraphObject;
 
 class AlbumsController extends AbstractActionController
 {
@@ -46,6 +47,7 @@ class AlbumsController extends AbstractActionController
         $this->facebookUrl = $config['fpageConf']['graphurl'];
         $furl = $config['fpageConf']['graphurl'] . '/' . $config['fpageConf']['pageid'];
         $fields = 'description,cover_photo,link,name,photos.fields(album,height,picture,width)';
+        $fieldsArr = explode(',', $fields);
         $clientConf = $config['fsocket'];
 
         //print_r($config);
@@ -66,25 +68,27 @@ class AlbumsController extends AbstractActionController
         $success = false;
         $result = $cache->getItem($key, $success);
         //	var_dump($result);
+        //TODO get rid of success
+        $success = false;
+        $albums = array();
         if (!$success || !$result) {
-
-            $request = new Request();
-            $request->setUri($furl . '/albums');
-            $request->getQuery()->set('fields', $fields);
-            //$request->getQuery()->set('access_token',$this->getAccessToken());
-            //print_r($request->getQuery()->toString());die;
-            //echo $furl.'/albums';
-            $client = new  Client(null, $clientConf);
+            $config = $this->getServiceLocator()->get('Config');
 
 
-            $response = $client->dispatch($request);
-            //    print_r($response->geBody());
-            $albums = json_decode($response->getBody());
+            $session = new FacebookSession($_SESSION['fb_token']);
+
+            $req = new FacebookRequest($session, 'GET', '/' . $config['fpageConf']['pageid'] . '/albums', array('fields' => $fields));
+            $request = $req->execute();
+// Get response as an array
+            $albums = $request->getResponse();
+
             $cache->setItem($key, serialize($albums));
             //  $this->albums = $albums->data;
         } else {
             $albums = unserialize($result);
         }
+
+
         $viewModel = new ViewModel(array(
             'pageid' => $config['fpageConf']['pageid'],
             'facebookurl' => $this->facebookUrl,
@@ -119,31 +123,24 @@ class AlbumsController extends AbstractActionController
 
         $cache = $this->getCache();
         //	$cache->
-        $key = 'album' . $albumKey .  preg_replace("/[^a-zA-Z0-9]/", '', $fields);
+        $key = 'album' . $albumKey . preg_replace("/[^a-zA-Z0-9]/", '', $fields);
 
         $success = false;
 
         $result = $cache->getItem($key, $success);
 
         $data = unserialize($result);
-
+        $success = false;
         if (!$success || !$data) {
 
-            $request = new Request();
-            $url = $furl;
-            //echo $url;die;
-            $request->setUri($url);
-            $request->getQuery()->set('fields', $fields);
-            //$request->getQuery()->set('access_token',$this->getAccessToken());
-            //print_r($request->getQuery()->toString());die;
-            //echo $furl.'/albums';
-            $client = new  Client(null, $clientConf);
+            $session = new FacebookSession($_SESSION['fb_token']);
 
-
-            $response = $client->dispatch($request);
+            $req = new FacebookRequest($session, 'GET', '/' . $albumKey, array('fields' => $fields));
+            $request = $req->execute();
             //    print_r($response->geBody());
-            if ($response && $response->getBody()) {
-                $pictures = json_decode($response->getBody());
+            if ($request) {
+                $pictures = $request->getResponse();
+
                 $cache->setItem($key, serialize($pictures));
             }
             //  $this->albums = $albums->data;
@@ -190,21 +187,14 @@ class AlbumsController extends AbstractActionController
         //var_dump($data);
         //var_dump($success);
         if (!$success || !$data) {
-            $request = new Request();
-            $url = $furl;
-            //echo $url;die;
-            $request->setUri($url);
-            $request->getQuery()->set('fields', $fields);
-            //$request->getQuery()->set('access_token',$this->getAccessToken());
-            //print_r($request->getQuery()->toString());die;
-            //echo $furl.'/albums';
-            $client = new  Client();
+            $session = new FacebookSession($_SESSION['fb_token']);
 
-
-            $response = $client->dispatch($request);
+            $req = new FacebookRequest($session, 'GET', '/' .$picKey , array('fields' => $fields));
+            $request = $req->execute();
             //    print_r($response->geBody());
-            if ($response && $response->getBody()) {
-                $picture = json_decode($response->getBody());
+            if ($request) {
+                $picture = $request->getResponse();
+
                 $cache->setItem($key, serialize($picture));
             }
             //  $this->albums = $albums->data;

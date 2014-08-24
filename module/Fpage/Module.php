@@ -11,6 +11,8 @@ namespace Fpage;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+use Facebook\FacebookSession;
+use Facebook\FacebookRequest;
 
 class Module
 {
@@ -18,12 +20,22 @@ class Module
     public function onRender(MvcEvent $e)
     {
     	$sm = $e->getController();
-    	var_dump($sm);die('hh');
+
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
-    }
 
+
+    }
+public function onBootstrap(MvcEvent $e){
+    $config =  $e->getApplication()->getServiceManager()->get('Config');
+    //  print_r($config);
+    $appid = $config['fpageConf']['appid'];
+    $appsecret = $config['fpageConf']['appsecret'];
+   // DIE($appid);
+    FacebookSession::setDefaultApplication( $appid, $appsecret );
+
+}
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';

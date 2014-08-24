@@ -8,12 +8,12 @@
  */
 namespace Fpage\Controller;
 
-use Guzzle\Http\Client;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-//use Zend\Http\Request;
-//use Zend\Http\Client;
-
+use Zend\Session;
+use Facebook\FacebookSession;
+use Facebook\FacebookRequest;
+use Facebook\GraphObject;
 class IndexController extends AbstractActionController
 {
 	private function getAccessToken(){
@@ -22,18 +22,22 @@ class IndexController extends AbstractActionController
 	}
     public function indexAction()
     {
+
     	$config = $this->getServiceLocator()->get('Config');
       //  print_r($config);
-    	$furl = $config['fpageConf']['graphurl'].$config['fpageConf']['pageid'];
-    	$clientConf =  $config['fsocket'];
+        $appid = $config['fpageConf']['appid'];
+        $appsecret = $config['fpageConf']['appsecret'];
 
-     $client = new Client($furl);
-    // $client->setDefaultOption('query', array('access_token' => $this->getAccessToken()));
-    $request = $client->get();
-     $response = $request->send();
-     
-     $user = json_decode($response->getBody());
+
+        $session = new FacebookSession( $_SESSION['fb_token'] );
+        $request = (new FacebookRequest( $session, 'GET','/'. $config['fpageConf']['pageid']))->execute();
+
+// Get response as an array
+        $user = $request->getResponse();
+
+        //print_r($user);die;
+    // $user = json_decode($response->getBody());
     // print_r($user);die;
-        return new ViewModel(array('user'=>$user));
+        return new ViewModel(array('user'=> $user));
     }
 }

@@ -8,6 +8,15 @@
 	"require" : {
 		"guzzle/guzzle" : "~3.7",
 		"zendframework/zendframework" : "~2.3-dev",
-		"zendframework/zftool": "dev-master"
-	}
+		"zendframework/zftool": "dev-master",
+
+            "facebook/php-sdk-v4" : "4.0.*"
+       
+	},
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.zendframework.com/"
+        }
+    ]
 }

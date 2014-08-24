@@ -1,4 +1,4 @@
-<div class="row12"><?php echo $albumName; ?></div>
+
 
 <!--<div id="myCarousel" class="carousel slide" data-ride="carousel">-->
 
@@ -6,35 +6,50 @@
 
     <div class="row12">
         <?php
+        function getFacebookImageFromURL($url)
+        {
+            $headers = get_headers($url, 1);
+            if (isset($headers['Location']))
+            {
+                return $headers['Location'];
+            }
+        }
         //print_r($pictures);
-        foreach ($posts as $k => $photo) {
-            $pic = isset($photo->images[1])?$photo->images[1] : $photo->images[0] ;
+        foreach ($posts as $k => $post) {
+           if(!property_exists($post, 'message')) {
+               $post->message = '';
+           }
+            if(!property_exists($post, 'description')) {
+                $post->description = '';
+            }
+            ///picture?type=large
             ?>
 
             <div class="col-md-12" style="margin-top:10px;border:1px solid #c0c0c0">
-                <a href="/Fpage/Albums/pictureDetails/<?= $photo->id ?>">
-                    <img style="float: left;margin:5px" width="<?= $pic->width ?>" height="<?= $pic->height ?>"
-                         src='<?=  $pic->source?>'/>
+                <?php if($post->type ==='photo'){
+                     $url = $facebookurl.'/'. $post->object_id.'/picture?type=normal';
+
+                    ?>
+                <a href="/Fpage/Albums/pictureDetails/<?= $post->object_id ?>">
+                    <img style="float: left;margin:5px"
+                         src='<?= getFacebookImageFromURL($url)?>'>
                 </a>
 
+                   <?php
+                } else
 
-                    <?php
-                    if (!empty($photo->name)){
-                        $data = explode("\n", $photo->name);
-                        $data[0] ="<b>".strtoupper($data[0])."</b><br/>";
-                        $photo->name = implode('',$data);
+
+                    if ($post->type ==='video'){
+
                         ?>
-
-                    <p class="text-left" style = "margin:5px;padding:5px;line-height:1.5em;text-indent:2em" >
-                        <?=  $photo->name?>
-                    </p>
-                        <p>
-                       <a href="<?=$photo->link?>" target="_blank">View on FaceBook </a>
-                        </p>
+                         <a href="<?=$post->link?>" target="_blank"><?=$post->name?></a>
+                        <embed src="<?= str_replace('autoplay=1','autoplay=0',$post->source)?>"></embed>
                     <?php
                     }
                     ?>
-
+                <p class="text-left" style = "margin:5px;padding:5px;line-height:1.5em;text-indent:2em" >
+                    <?=  $post->message.'<br/>'.$post->description?>
+                </p>
             </div>
 
         <?php

@@ -14,7 +14,8 @@ use Zend\View\Model\ViewModel;
 
 use Zend\Http\Client;
 use Zend\Http\Request;
-
+use Facebook\FacebookSession;
+use Facebook\FacebookRequest;
 class PostsController  extends AbstractActionController{
     //TODO
     // put a cache factory
@@ -47,7 +48,7 @@ class PostsController  extends AbstractActionController{
 
         $furl = $config['fpageConf']['graphurl'] . '/' . $config['fpageConf']['pageid'];
 
-        $fields = 'type, object_id, message,  picture,source,from,comments.limit(50)';
+        $fields = 'link,name, description, type, object_id, message,  picture,source,from,comments.limit(5)';
         $clientConf = $config['fsocket'];
 
         $cache = $this->getCache();
@@ -57,25 +58,20 @@ class PostsController  extends AbstractActionController{
         $success = false;
         //	var_dump($result);
         if (!$success || !$result) {
-
-            $request = new Request();
-            $request->setUri($furl . '/posts');
-            $request->getQuery()->set('fields', $fields);
-            //$request->getQuery()->set('access_token',$this->getAccessToken());
-            //print_r($request->getQuery()->toString());die;
-            //echo $furl.'/albums';
-            $client = new  Client(null, $clientConf);
-
-
-            $response = $client->dispatch($request);
+            $session = new FacebookSession($_SESSION['fb_token']);
+            $req = new FacebookRequest($session, 'GET', '/' .$config['fpageConf']['pageid'].'/posts' , array('fields' => $fields));
+            $request = $req->execute();
             //    print_r($response->geBody());
-            $posts = json_decode($response->getBody());
-            $cache->setItem($key, serialize($posts));
+            if ($request) {
+                $posts = $request->getResponse();
+
+                $cache->setItem($key, serialize($posts));
+            }
             //  $this->albums = $albums->data;
         } else {
             $posts = unserialize($result);
         }
-        print_r($posts);die;
+       //  print_r($posts);die;
         $viewModel = new ViewModel(array(
             'pageid' => $config['fpageConf']['pageid'],
             'facebookurl' => $this->facebookUrl,

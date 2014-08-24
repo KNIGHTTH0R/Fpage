@@ -63,7 +63,7 @@ return array(
             								'route'    => '/[:action]/[:id]',
             								'constraints' => array(
             										'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-            										'id'     => '[0-9]*',
+            										'id'     => '[0-9_]*',
             								),
             								'defaults' => array(
             										'__NAMESPACE__' => 'Fpage\Controller',
