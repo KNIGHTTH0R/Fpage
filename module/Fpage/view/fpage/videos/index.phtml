@@ -1,0 +1,58 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: hidran
+ * Date: 8/24/14
+ * Time: 12:43 PM
+ */
+?>
+<script>
+   function showModal(emb, id){
+        var myUrl= decodeURIComponent(emb).split('+');
+        myUrl = myUrl.join(' ');
+
+       document.getElementById('embed').innerHTML=  myUrl;
+       document.getElementById('description').innerHTML=  document.getElementById(id).innerHTML;
+    }
+</script>
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="width: 100%">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+                <div class="row">
+                    <div class ="col-md-8" id="embed"></div>
+                    <div class ="col-md-4" id="description"></div>
+                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="row">
+<?php
+ $tot = count($this->vars('videos'));
+ foreach ($this->vars('videos') as $k => $video){
+        $index = count($video->format)>1 ?1:0;
+        $embed = $video->format[$index];
+     ?>
+
+
+     <div class="text-center col-xs-12 col-sm-6 col-md-3" style="border: 0px solid #c0c0c0">
+
+       <a href="#" onclick= 'showModal("<?=urlencode($embed->embed_html)?>","<?=$video->id?>")' data-toggle="modal" data-target=".bs-example-modal-lg">
+           <img   src="<?=$video->picture?>"></a>
+         <div class="text-left col-sm-10" style="display: none" id="<?=$video->id?>"><?=$video->description?></div>
+     </div>
+
+     <?php
+     if ($k==$tot-1){
+         echo '<div class="clearfix visible-xs"></div>';
+     }
+ }
+
+  ?>
+</div>
