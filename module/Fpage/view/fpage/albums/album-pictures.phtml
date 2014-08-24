@@ -1,46 +1,55 @@
+<div class="row12"><?php echo $albumName; ?></div>
+
+<!--<div id="myCarousel" class="carousel slide" data-ride="carousel">-->
 
 
-	<div class="row12"><?php echo $albumName;?></div>
 
-<div id="myCarousel" class="carousel slide" data-ride="carousel">
-    <!-- Carousel indicators 
-    <ol class="carousel-indicators">
-    <?php
-    /*$totpci =count($pictures);
-     for($i=0; $i<$totpci; $i++) :?>
-        <li data-target="#myCarousel" data-slide-to="<?=$i?>" class="<?=$i==0?'active':''?>"></li>
-      <?php endfor;
-      */
-      ?>
-    </ol>  
--->
-   <div class="carousel-inner">
-<?php
-//print_r($pictures);
- foreach ($pictures as $k => $photo){ ?>
+    <div class="row12">
+        <?php
+        //print_r($pictures);
+        foreach ($pictures as $k => $photo) {
+            $pic = isset($photo->images[1])?$photo->images[1] : $photo->images[0] ;
+            ?>
 
-         <div class="<?= $k==0?'active ':''?>item">
-              <a href="/Fpage/Albums/pictureDetails/<?=$photo->id?>">
-              <img class="img-thumbnail" width="<?=$photo->width?>" height="<?=$photo->height?>"  src='<?= str_replace('_s', '_n', $photo->picture)?>'/>
-              </a>
-              <div class="clearfix"></div>
-              <div class="row8 text-center">
-              <br>
-              <p class="text-left" style="margin:5px;padding:5px;line-height:1.5em;text-indent:2em"><?= $this->escapehtml($photo->name)?></p>
-              </div>
-         </div>
-  <?php 
+            <div class="col-md-12" style="margin-top:10px;border:1px solid #c0c0c0">
+                <a href="/Fpage/Albums/pictureDetails/<?= $photo->id ?>">
+                    <img style="float: left;margin:5px" width="<?= $pic->width ?>" height="<?= $pic->height ?>"
+                         src='<?=  $pic->source?>'/>
+                </a>
 
-}
 
-  ?>
-  </div>
- <!-- Carousel nav -->
+                    <?php
+                    if (!empty($photo->name)){
+                        $data = explode("\n", $photo->name);
+                        $data[0] ="<b>".strtoupper($data[0])."</b><br/>";
+                        $photo->name = implode('',$data);
+                        ?>
+
+                    <p class="text-left" style = "margin:5px;padding:5px;line-height:1.5em;text-indent:2em" >
+                        <?=  $photo->name?>
+                    </p>
+                        <p>
+                       <a href="<?=$photo->link?>" target="_blank">View on FaceBook </a>
+                        </p>
+                    <?php
+                    }
+                    ?>
+
+            </div>
+
+        <?php
+
+        }
+
+        ?>
+    </div>
+    <!-- Carousel nav
     <a class="carousel-control left" href="#myCarousel" data-slide="prev">
         <span class="glyphicon glyphicon-chevron-left"></span>
     </a>
     <a class="carousel-control right" href="#myCarousel" data-slide="next">
         <span class="glyphicon glyphicon-chevron-right"></span>
     </a>
-</div>
+    -->
+<!--</div>-->
   

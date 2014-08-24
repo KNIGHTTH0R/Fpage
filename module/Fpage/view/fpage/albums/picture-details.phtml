@@ -1,15 +1,25 @@
-<div class="container" style="clear: both;margin-top:60px">
+<div class="row">
+    <a href="/Fpage/Albums">Albums</a>/
+    <a href="/Fpage/Albums/albumPictures/<?= $albumId ?>"><?= $albumName ?></a>
+</div>
+<div class="container" style="clear: both;margin-top:10px">
 <?php
 $pic = $images [0]->source;
 ?>
 <div class="row12" style="margin-top: 40px"></div>
 <div class="row">
 	<div class="col-md-6">
-		<img class="img-thumbnail" width="<?=$images[0]->width?>"
+		<a href="<?=$picture->source?>" target="_blank"><img class="img-thumbnail" width="<?=$images[0]->width?>"
 			height="<?=$images[0]->height?>"
-			src='<?= str_replace('_s', '_n', $images[0]->source)?>' />
+			src='<?= str_replace('_s', '_n', $images[0]->source)?>' /> </a>
 			<p></p>
 			<div class="text-left"><?php echo $name;?></div>
+        <p>
+            <?php
+             //  print_r($picture);
+            ?>
+            <a href="<?=$picture->link?>" target="_blank">View on FaceBook </a>
+        </p>
 	</div>
 	<div class="col-md-6 text-left">
 		
@@ -24,10 +34,10 @@ foreach ( $comments as $k => $comment ) {
 
        <div class="col-md-12">
 			<div class="col-md-12">
-				<a href="#"> <img class="img-thumbnail"
+				<a target="_blank" href="https://www.facebook.com/<?=$comment->from->id?>"> <img class="img-thumbnail"
 					src='<?=$facebookurl.'/'.$comment->from->id?>/picture?type=small' />
 
-					<a href="<?=$facebookurl.'/'.$comment->from->name?>"><?=$comment->from->name?></a>
+					<a target="_blank" href="https://www.facebook.com/<?=$comment->from->id?>"><?=$comment->from->name?></a>
 			
 			
 				<span class="text-left"><?= $this->escapehtml($comment->message)?></span>

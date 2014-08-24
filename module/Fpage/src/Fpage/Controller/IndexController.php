@@ -18,19 +18,17 @@ class IndexController extends AbstractActionController
 {
 	private function getAccessToken(){
 		$config = $this->getServiceLocator()->get('Config');
-		return $config['fpageConf']['appid'].'|'.$config['fpageConf']['appsecret'];
+		return $config['fpageConf']['pageid'].'|'.$config['fpageConf']['appsecret'];
 	}
     public function indexAction()
     {
     	$config = $this->getServiceLocator()->get('Config');
+      //  print_r($config);
     	$furl = $config['fpageConf']['graphurl'].$config['fpageConf']['pageid'];
     	$clientConf =  $config['fsocket'];
-    //	echo $furl.'?access_token='.$this->getAccessToken();
-    	//var_dump($clientConf);die;
-    // Create a client and provide a base URL
-   
+
      $client = new Client($furl);
-     $client->setDefaultOption('query', array('access_token' => $this->getAccessToken()));
+    // $client->setDefaultOption('query', array('access_token' => $this->getAccessToken()));
     $request = $client->get();
      $response = $request->send();
      
