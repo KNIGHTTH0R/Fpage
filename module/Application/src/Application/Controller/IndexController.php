@@ -75,9 +75,7 @@ class IndexController extends AbstractActionController
 
 // Requested permissions - optional
             $permissions = array(
-                'email',
-                'user_location',
-                'user_birthday'
+
             );
 
 // Get login URL
