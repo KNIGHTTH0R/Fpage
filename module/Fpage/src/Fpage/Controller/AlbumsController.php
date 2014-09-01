@@ -48,7 +48,7 @@ class AlbumsController extends AbstractActionController
         $furl = $config['fpageConf']['graphurl'] . '/' . $config['fpageConf']['pageid'];
         $fields = 'description,cover_photo,link,name,photos.fields(album,height,picture,width)';
         $fieldsArr = explode(',', $fields);
-        $clientConf = $config['fsocket'];
+       
 
         //print_r($config);
         // Create a client and provide a base URL
