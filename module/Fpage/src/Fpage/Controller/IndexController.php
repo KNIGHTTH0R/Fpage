@@ -25,7 +25,7 @@ class IndexController extends AbstractActionController
         $appid = $config['fpageConf']['appid'];
         $appsecret = $config['fpageConf']['appsecret'];
 
-       $ses = new Session();
+      
       
         $session = new FacebookSession( $_SESSION['fb_token'] );
         $request = (new FacebookRequest( $session, 'GET','/'. $config['fpageConf']['pageid']))->execute();
