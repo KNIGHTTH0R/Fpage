@@ -1,22 +1,16 @@
 {
-	"name" : "hidran/Fpage",
-	"authors" : [{
-			"name" : "Hidran Arias",
-			"email" : "hidran@gmail.com"
-		}
-	],
-	"require" : {
-		"guzzle/guzzle" : "~3.7",
-		"zendframework/zendframework" : "~2.3-dev",
-		"zendframework/zftool": "dev-master",
-
-            "facebook/php-sdk-v4" : "4.0.*"
-       
-	},
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://packages.zendframework.com/"
-        }
-    ]
+  "name" : "hidran/Fpage",
+  "require" : {
+    "zendframework/zendframework" : "~2.3-dev",
+    "zendframework/zftool" : "dev-master",
+    "facebook/php-sdk-v4" : "4.0.*"
+  },
+  "repositories" : [ {
+    "type" : "composer",
+    "url" : "https://packages.zendframework.com/"
+  } ],
+  "authors" : [ {
+    "name" : "Hidran Arias",
+    "email" : "hidran@gmail.com"
+  } ]
 }

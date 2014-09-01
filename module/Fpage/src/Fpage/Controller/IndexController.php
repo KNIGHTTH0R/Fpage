@@ -13,22 +13,20 @@ use Zend\View\Model\ViewModel;
 use Zend\Session;
 use Facebook\FacebookSession;
 use Facebook\FacebookRequest;
-use Facebook\GraphObject;
+
 class IndexController extends AbstractActionController
 {
-	private function getAccessToken(){
-		$config = $this->getServiceLocator()->get('Config');
-		return $config['fpageConf']['pageid'].'|'.$config['fpageConf']['appsecret'];
-	}
+	
     public function indexAction()
     {
-
+     
     	$config = $this->getServiceLocator()->get('Config');
       //  print_r($config);
         $appid = $config['fpageConf']['appid'];
         $appsecret = $config['fpageConf']['appsecret'];
 
-
+       $ses = new Session();
+      
         $session = new FacebookSession( $_SESSION['fb_token'] );
         $request = (new FacebookRequest( $session, 'GET','/'. $config['fpageConf']['pageid']))->execute();
 

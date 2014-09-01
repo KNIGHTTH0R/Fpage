@@ -23,11 +23,8 @@ class IndexController extends AbstractActionController
         $config = $this->getServiceLocator()->get('Config');
         $appid = $config['fpageConf']['appid'];
         $appsecret = $config['fpageConf']['appsecret'];
-
+        $redirectUrl =  $config['fpageConf']['redirectUrl'];
         FacebookSession::setDefaultApplication( $appid, $appsecret );
-
-        $redirectUrl='http://fpage.hidrasoft.com/';
-        $redirectUrl2 = 'http://www.hidrasoft.com/demos/Fpage/public/Albums';
         $helper = new FacebookRedirectLoginHelper($redirectUrl, $appid, $appsecret);
         if ( isset( $_SESSION ) && isset( $_SESSION['fb_token'] ) ) {
 

@@ -12,7 +12,6 @@ namespace Fpage;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use Facebook\FacebookSession;
-use Facebook\FacebookRequest;
 
 class Module
 {
