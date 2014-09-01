@@ -119,7 +119,7 @@ class AlbumsController extends AbstractActionController
 
         $furl = $this->facebookUrl . $albumKey;
 
-        $clientConf = $config['fsocket'];
+      
 
         $cache = $this->getCache();
         //	$cache->
@@ -232,8 +232,7 @@ class AlbumsController extends AbstractActionController
         $this->facebookUrl = $config['fpageConf']['graphurl'];
         $furl = $config['fpageConf']['graphurl'] . '/' . $config['fpageConf']['pageid'];
         $fields = 'posts.fields(id,message,picture,link,icon,shares)';
-        $clientConf = $config['fsocket'];
-
+  
         //print_r($config);
         // Create a client and provide a base URL
         /*    $client = new Client($furl.'/albums');
