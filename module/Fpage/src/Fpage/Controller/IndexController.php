@@ -21,7 +21,7 @@ class IndexController extends AbstractActionController
     {
      
     	$config = $this->getServiceLocator()->get('Config');
-      //  print_r($config);
+        
         $appid = $config['fpageConf']['appid'];
         $appsecret = $config['fpageConf']['appsecret'];
 
